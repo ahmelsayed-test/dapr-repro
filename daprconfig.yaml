@@ -1,0 +1,52 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: defaultconfig
+spec:
+  api:
+    allowed:
+    - name: state
+      protocol: http
+      version: v1.0
+    - name: state
+      protocol: grpc
+      version: v1
+    - name: actors
+      protocol: http
+      version: v1.0
+    - name: actors
+      protocol: grpc
+      version: v1
+    - name: invoke
+      protocol: http
+      version: v1.0
+    - name: invoke
+      protocol: grpc
+      version: v1
+    - name: bindings
+      protocol: http
+      version: v1.0
+    - name: bindings
+      protocol: grpc
+      version: v1
+    - name: publish
+      protocol: http
+      version: v1.0
+    - name: publish
+      protocol: grpc
+      version: v1
+    - name: metadata
+      protocol: http
+      version: v1.0
+    - name: metadata
+      protocol: grpc
+      version: v1
+  features:
+  - enabled: true
+    name: Resiliency
+  - enabled: true
+    name: Actor.TypeMetadata
+  - enabled: true
+    name: ServiceInvocation.NoDefaultContentType
+  metric:
+    enabled: true

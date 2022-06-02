@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dapr-orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dapr-orders
+  template:
+    metadata:
+      annotations:
+        dapr.io/app-id: ordersapp
+        dapr.io/app-port: "3000"
+        dapr.io/config: defaultconfig
+        dapr.io/enabled: "true"
+        dapr.io/http-read-buffer-size: "65"
+        dapr.io/log-level: debug
+      labels:
+        app: dapr-orders
+    spec:
+      containers:
+        - image: docker.io/ahmelsayed/ordersapp:1
+          imagePullPolicy: Always
+          name: ordersapp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dapr-process
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dapr-process
+  template:
+    metadata:
+      annotations:
+        dapr.io/app-id: dapr-process
+        dapr.io/app-port: "5000"
+        dapr.io/config: defaultconfig
+        dapr.io/enabled: "true"
+        dapr.io/http-read-buffer-size: "65"
+        dapr.io/log-level: debug
+      labels:
+        app: dapr-process
+    spec:
+      containers:
+        - env:
+          - name: TARGET_APP
+            value: ordersapp
+          - name: USE_LARGE_HEADER
+            value: "true"
+          image: docker.io/ahmelsayed/processapp:3
+          imagePullPolicy: Always
+          name: processapp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: processapp-svc
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: dapr-process
+  type: LoadBalancer
+---
