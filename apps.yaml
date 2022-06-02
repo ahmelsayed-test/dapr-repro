@@ -20,7 +20,7 @@ spec:
         app: dapr-orders
     spec:
       containers:
-        - image: docker.io/ahmelsayed/ordersapp:1
+        - image: docker.io/ahmelsayed/ordersapp:2
           imagePullPolicy: Always
           name: ordersapp
 ---

@@ -3,4 +3,4 @@ WORKDIR /usr/src/app
 COPY . .
 RUN npm install
 EXPOSE 3000
-CMD [ "node", "app.js" ]
+CMD [ "node", "--max-http-header-size=66560", "app.js" ]
