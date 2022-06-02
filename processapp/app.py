@@ -12,7 +12,6 @@ logging.basicConfig(level=logging.INFO)
 
 dapr_port = os.getenv("DAPR_HTTP_PORT")
 target_app = os.getenv("TARGET_APP")
-large_headers = os.getenv("USE_LARGE_HEADER", "false").lower()
 orders_url = "http://localhost:{}/v1.0/invoke/{}/method/orders".format(dapr_port, target_app)
 
 app = flask.Flask(__name__)

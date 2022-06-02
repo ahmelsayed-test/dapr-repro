@@ -49,8 +49,6 @@ spec:
         - env:
           - name: TARGET_APP
             value: ordersapp
-          - name: USE_LARGE_HEADER
-            value: "true"
           image: docker.io/ahmelsayed/processapp:3
           imagePullPolicy: Always
           name: processapp
